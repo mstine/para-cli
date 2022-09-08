@@ -8,10 +8,25 @@ import kotlin.system.exitProcess
 
 @Command(
     name = "para",
+    header = [
+        "PARA CLI - A Shell for Your Second Brain!",
+        "-----------------------------------------"
+             ],
+    footer = [
+        "---------------------------------",
+        "Copyright (C) 2022 Matthew Stine."
+             ],
     mixinStandardHelpOptions = true,
     version = ["0.1.0"],
-    scope = CommandLine.ScopeType.INHERIT,
-    subcommands = [Root::class, Project::class, Area::class, Resource::class, Archive::class, HelpCommand::class]
+    subcommands = [
+        Root::class,
+        Project::class,
+        Area::class,
+        Resource::class,
+        Archive::class,
+        Grep::class,
+        HelpCommand::class
+    ]
 )
 class Main
 
