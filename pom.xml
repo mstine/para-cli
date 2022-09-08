@@ -139,6 +139,7 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <imageName>para</imageName>
                             <mainClass>com.mattstine.para.MainKt</mainClass>
                         </configuration>
                     </plugin>
