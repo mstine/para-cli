@@ -6,32 +6,35 @@ import java.nio.file.Path
 
 @Command(
     name = "root",
-    description = ["manage PARA root locations"],
+    description = ["Subcommands for managing PARA Roots"],
+    mixinStandardHelpOptions = true
 )
 class Root {
     @Command(
         name = "list",
         aliases = ["l"],
-        description = ["list PARA root locations"],
+        description = ["List PARA Roots"],
+        mixinStandardHelpOptions = true
     )
     fun list() {}
 
     @Command(
         name = "create",
         aliases = ["c"],
-        description = ["create new PARA root location"],
+        description = ["Create PARA Root"],
+        mixinStandardHelpOptions = true
     )
     fun create(
         @Option(
             names = ["-n", "--name"],
-            description = ["the PARA Root's name"],
+            description = ["PARA Root name"],
             required = true,
             paramLabel = "<NAME>"
         )
         name: String,
         @Option(
             names = ["-p", "--path"],
-            description = ["the PARA Root's path"],
+            description = ["PARA Root path"],
             required = true,
             paramLabel = "<PATH>"
         )
@@ -41,12 +44,13 @@ class Root {
     @Command(
         name = "remove",
         aliases = ["r"],
-        description = ["remove PARA root location (no files deleted)"],
+        description = ["Remove PARA Root (no files deleted)"],
+        mixinStandardHelpOptions = true
     )
     fun remove(
         @Option(
             names = ["-n", "--name"],
-            description = ["the PARA Root's name"],
+            description = ["PARA Root name"],
             required = true,
             paramLabel = "<NAME>"
         )
@@ -56,12 +60,13 @@ class Root {
     @Command(
         name = "default",
         aliases = ["d"],
-        description = ["set this PARA root to be the default for new shells"],
+        description = ["Make PARA Root default for new shells"],
+        mixinStandardHelpOptions = true
     )
     fun default(
         @Option(
             names = ["-n", "--name"],
-            description = ["the PARA Root's name"],
+            description = ["PARA Root name"],
             required = true,
             paramLabel = "<NAME>"
         )
@@ -71,12 +76,29 @@ class Root {
     @Command(
         name = "use",
         aliases = ["u"],
-        description = ["use this PARA root in this shell"],
+        description = ["Use PARA Root in current shell"],
+        mixinStandardHelpOptions = true
     )
     fun use(
         @Option(
             names = ["-n", "--name"],
-            description = ["the PARA Root's name"],
+            description = ["PARA Root name"],
+            required = true,
+            paramLabel = "<NAME>"
+        )
+        name: String
+    ) {}
+
+    @Command(
+        name = "info",
+        aliases = ["i"],
+        description = ["Display PARA Root metadata"],
+        mixinStandardHelpOptions = true
+    )
+    fun info(
+        @Option(
+            names = ["-n", "--name"],
+            description = ["PARA Root name"],
             required = true,
             paramLabel = "<NAME>"
         )
