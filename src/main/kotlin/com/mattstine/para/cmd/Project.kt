@@ -61,7 +61,7 @@ class Project {
             paramLabel = "<GOAL>",
             split = ","
         )
-        goal: List<String>?
+        goals: List<String>?
     ) {}
 
     @Command(
