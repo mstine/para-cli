@@ -1,5 +1,6 @@
 package com.mattstine.para.root
 
+import arrow.core.Either
 import java.nio.file.Path
 
 class RootService {
@@ -7,12 +8,15 @@ class RootService {
 
     fun list() = repository.toList()
 
-    fun create(name: String, path: Path) =
-        this.find(name).let {
-            if (it != null) {
-               throw RootExistsException(it)
+    fun create(name: String, path: Path): Either<RootError.Exists, Root> =
+        this.find(name).let { found ->
+            if (found != null) {
+                Either.Left(RootError.Exists)
             } else {
-                repository += Root(name, path)
+                Root(name, path).let { new ->
+                    repository += new
+                    Either.Right(new)
+                }
             }
         }
 
@@ -25,6 +29,6 @@ data class Root(
     val path: Path
 )
 
-data class RootExistsException(
-    val root: Root
-) : Exception()
+sealed class RootError {
+    object Exists : RootError()
+}
