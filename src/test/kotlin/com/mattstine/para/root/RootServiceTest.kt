@@ -86,8 +86,8 @@ class RootServiceTest {
             val root2 = this.create("root2", Path.of("path2"))
             this.default("root2")
 
-            assertThat(root1.orNull()?.default).isFalse
-            assertThat(root2.orNull()?.default).isTrue
+            assertThat(this.find("root1")?.default).isFalse
+            assertThat(this.find("root2")?.default).isTrue
         }
     }
 }

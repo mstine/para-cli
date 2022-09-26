@@ -34,32 +34,35 @@ class RootService {
             }
 
     fun default(name: String): Either<RootError.NotFound, None> =
-        this.find(name).let {
-            if (it != null) {
-                clearDefaultRoot()
-                it.default = true
-                Either.Right(None)
-            } else {
+        repository.indexOfFirst { it.name == name }.let { indexOfNewDefault ->
+            if (indexOfNewDefault < 0) {
                 Either.Left(RootError.NotFound)
+            } else {
+                findIndexOfCurrentDefault().orNull()?.let {
+                    repository[it] = repository[it].copy(default = false)
+                }
+                repository[indexOfNewDefault] = repository[indexOfNewDefault].copy(default = true)
+                Either.Right(None)
             }
         }
 
-    private fun clearDefaultRoot() {
-        repository.forEach { root ->
-            root.default = false
-        }
-    }
-
     private fun findByPath(path: Path): Root? = repository
         .singleOrNull { it.path.fileName == path.fileName }
+
+    private fun findIndexOfCurrentDefault(): Either<None, Int> =
+        repository.indexOfFirst { it.default }.let {
+            when {
+                it < 0 -> Either.Left(None)
+                else -> Either.Right(it)
+            }
+        }
 }
 
 data class Root(
     val name: String,
     val path: Path,
-    var default: Boolean = false
+    val default: Boolean = false
 )
-
 
 
 sealed class RootError {
